@@ -8,17 +8,21 @@ file = 'dataset_1000/repository/meters_1_measurement.json'
 with open(file, 'r') as f:
     data = json.load(f)
 
-df_input = data
+df_input = data[1]
 df = pd.DataFrame(df_input)
-df = df.explode(['laggingReactivePower','leadingReactivePower','consumption'])
 df['date'] = pd.to_datetime(df[['day','month','year']])
-print(df['date'])
-print(len(df))
-df2 = pd.Series(pd.date_range('1/1/2016', '1/31/2017', freq='15min', closed='left'))
-print(df2)
-print(len(df2))
+
+# Make dates with 15 minutes interval
+df2 = pd.Series(pd.date_range('1/1/2016', '1/2/2016', freq='15min', closed='left'))
+
+df = df.explode(['laggingReactivePower','leadingReactivePower','consumption'])
+
+print("After explode")
+df['date'] = df2
+print(df)
+
 # plotting
-cols = ['leadingReactivePowerSum','laggingReactivePowerSum','maxConsumption','lowConsumptionSum','highConsumptionSum']
+cols = ['leadingReactivePower','laggingReactivePower','consumption']
 
 for col in cols:
     plt.plot(df['date'], df[col], label='M1 ' + col)
