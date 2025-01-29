@@ -7,7 +7,7 @@ val2 = 300
 change = 25
 
 # data
-x = list(range(1, 2*minutes+1))
+x = list(range(0, minutes))
 data = []
 demand = []
 for i in range(0,minutes):
@@ -15,9 +15,6 @@ for i in range(0,minutes):
     val2 = val2 + random.randint(-1,1)
     data.append(val)
     demand.append(val2)
-
-data.extend(list(reversed(data)))
-demand.extend(list(reversed(demand)))
 
 # plotting
 plt.title("Flexibilitätsvermarktung") 
